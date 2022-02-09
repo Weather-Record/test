@@ -16,10 +16,11 @@ public class BasicController {
 	private BasicService basicService;
 	
 	//////////////// View Control
+	//return 할 view 뒤에 .page를 기입하면 tiles/basic.jsp 파일의 레이아웃 안 body 영역에 해당 view를 띄울 수 있음
 	//메인 페이지
 	@GetMapping("/")
 	public String home() {
-		return "home";
+		return "map.page";
 	}
 
 	//관리자 페이지 -> 로그인 기능 구현 후 수정
@@ -32,34 +33,39 @@ public class BasicController {
 	public String userpage() {
 		return "userpage";
 	}
-
-	@GetMapping("/layout")
-	public String layoutEx() {
-		return "layout/layout";
-	}
 	
-	//로그인, 로그아웃, 회원가입 처리
+	//회원가입
 	@GetMapping("/signup")
 	public String signup() {
-		return "signup";
+		return "signup.page";
+	}
+	
+	//로그인
+	@GetMapping("/signin")
+	public String login() {
+		return "signin.page";
 	}
 
-	//////////////// Data Control
+	//Data Control -> 회원가입 및 유효성 검사
+	@ResponseBody
 	@PostMapping("/signup")
 	public Map<String, Object> insertMember(HttpServletRequest request, HttpServletResponse response){
 		return basicService.insertMember(request, response);
 	}
 	
-	@GetMapping("/idcheck")
+	@ResponseBody
+	@PostMapping("/idcheck")
 	public Map<String, Object> idCheck(HttpServletRequest request, HttpServletResponse response){
 		return basicService.idCheck(request, response);
 	} 
 	
+	@ResponseBody
 	@GetMapping("/emailcheck")
 	public Map<String, Object> emailCheck(HttpServletRequest request, HttpServletResponse response){
 		return basicService.emailCheck(request, response);
 	} 
 
+	@ResponseBody
 	@GetMapping("/nicknamecheck")
 	public Map<String, Object> nicknameCheck(HttpServletRequest request, HttpServletResponse response){
 		return basicService.nicknameCheck(request, response);

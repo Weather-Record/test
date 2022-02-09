@@ -33,19 +33,17 @@ public class WeatherController {
 	//초단기 실황 -> 1일 이내만 가능
 	@GetMapping("/getultrasrtncst")
 	public String getultrasrtncst() {
-		return "/api/getultrasrtncstform";
+		return "/api/getultrasrtncstform.page";
 	}
 	
 	@PostMapping("/getultrasrtncst")
 	public String getultrasrtncst(HttpServletRequest request, Model model) throws IOException, ParseException {
-		//String date = request.getParameter("date");
-		//String time = request.getParameter("time");
 		String nx = request.getParameter("nx");
 		String ny = request.getParameter("ny");
 		//추후 지역 전체 데이터 테이블 생성하고 거기서 불러오도록 수정
 		Weather list = wservice.getultrasrtncst(nx, ny);
 		model.addAttribute("list", list);
-		return "/api/getultrasrtncst";
+		return "/api/getultrasrtncst.page";
 	}	
 	
 	

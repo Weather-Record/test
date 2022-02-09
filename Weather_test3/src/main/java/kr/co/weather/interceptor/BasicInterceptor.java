@@ -57,7 +57,6 @@ public class BasicInterceptor extends HandlerInterceptorAdapter{
 			}
 			System.out.println("hour : "+hour+"시");
 		}
-		
 		request.setAttribute("gridlist", gridlist);
 		request.setAttribute("templist", templist);
 		return true;

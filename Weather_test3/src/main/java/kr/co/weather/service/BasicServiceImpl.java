@@ -17,15 +17,16 @@ public class BasicServiceImpl implements BasicService {
 	@Override
 	public Map<String, Object> idCheck(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<>();
-
+		
 		String id = request.getParameter("id");
+		//System.out.println("요청된 id : "+id);
 		String result = mapper.idCheck(id);
 
 		//없으면 result = true
 		if(result == null) {
-			map.put("result", true);
+			map.put("idcheck", true);
 		}else {
-			map.put("result", false);
+			map.put("idcheck", false);
 		}
 		return map;
 	}
@@ -39,9 +40,9 @@ public class BasicServiceImpl implements BasicService {
 
 		//없으면 result = true
 		if(result == null) {
-			map.put("result", true);
+			map.put("emailcheck", true);
 		}else {
-			map.put("result", false);
+			map.put("emailcheck", false);
 		}
 		return map;
 	}
@@ -51,12 +52,12 @@ public class BasicServiceImpl implements BasicService {
 		Map<String, Object> map = new HashMap<>();
 
 		String nickname = request.getParameter("nickname");
-		String result = mapper.nicknameCheck("nickname");
+		String result = mapper.nicknameCheck(nickname);
 		//없으면 result = true
 		if(result==null) {
-			map.put("result", true);
+			map.put("nicknamecheck", true);
 		}else {
-			map.put("result", false);
+			map.put("nicknamecheck", false);
 		}
 		return map;
 	}

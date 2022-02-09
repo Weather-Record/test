@@ -1,6 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!-- Tiles Framework를 사용하기 위한 처리-->
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<!-- List를 순회하기 위해서 태그 라이브러리 설정 -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- List의 데이터가 있는지 없는지 확인하기 위해서 List의 길이를 확인하는 태그 라이브러리 설정 -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="utf-8" />
@@ -15,10 +21,9 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
 <!-- Bootstrap core JS-->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS -> Toggle과 관련된 작업 -->
+<script src="js/scripts.js"></script> 
 
 </head>
 
@@ -26,8 +31,7 @@
 	<div class="d-flex" id="wrapper">
 		<!-- Sidebar-->
 		<div class="border-end bg-white" id="sidebar-wrapper">
-			<div class="sidebar-heading border-bottom bg-light">Weather
-				Analysis</div>
+			<div class="sidebar-heading border-bottom bg-light"><a href = "/" style="text-decoration:none">Weather Analysis</a></div>
 			<div class="list-group list-group-flush">
 				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="getultrasrtncst">실시간 날씨 현황</a> 
 				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">기간별 날씨 현황</a> 
@@ -54,24 +58,15 @@
 					</button>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-							<!-- 
-							<li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
-							<li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
-							<li class="nav-item dropdown"><a
-								class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-								role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">Dropdown</a>
-								<div class="dropdown-menu dropdown-menu-end"
-									aria-labelledby="navbarDropdown">
-									<a class="dropdown-item" href="#!">Action</a> <a
-										class="dropdown-item" href="#!">Another action</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#!">Something else here</a>
-								</div></li>
-							-->
+							
 							<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-								<a class="btn btn-outline-primary" href="signup" role="button">Sign in</a>
-								<a class="btn btn-primary" href="signup" role="button">Sign up</a>
+								<c:if test="${LOGIN == null}">
+									<a class="btn btn-outline-primary" href="signin" role="button">Sign in</a>
+									<a class="btn btn-primary" href="signup" role="button">Sign up</a>
+								</c:if>
+								<c:if test="${LOGIN != null}">
+									<a class="btn btn-outline-primary" href="signup" role="button">Log out</a>
+								</c:if>
 							</div>
 						</ul>
 					</div>
@@ -79,9 +74,7 @@
 			</nav>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<!--  <div fragment="content"></div> -->
-				<%@ include file="../map.jsp" %>
-
+				<div id="main"><tiles:insertAttribute name="body" /></div>
 			</div>
 		</div>
 	</div>
