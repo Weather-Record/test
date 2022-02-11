@@ -66,7 +66,7 @@ public interface Mapper {
 	public int insertMember(Member member);
 		
 	//login
-	@Select("select member_id, member_pw, nickname from Member")
+	@Select("select member_id, member_pw, nickname from weathermember")
 	public List<Member> login();
 	
 	

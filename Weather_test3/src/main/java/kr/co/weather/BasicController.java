@@ -46,7 +46,7 @@ public class BasicController {
 		return "signin.page";
 	}
 
-	//Data Control -> 회원가입 및 유효성 검사
+	//Data Control -> RestController
 	@ResponseBody
 	@PostMapping("/signup")
 	public Map<String, Object> insertMember(HttpServletRequest request, HttpServletResponse response){
@@ -69,6 +69,12 @@ public class BasicController {
 	@GetMapping("/nicknamecheck")
 	public Map<String, Object> nicknameCheck(HttpServletRequest request, HttpServletResponse response){
 		return basicService.nicknameCheck(request, response);
+	} 
+	
+	@ResponseBody
+	@PostMapping("/signin")
+	public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response){
+		return basicService.login(request, response);
 	} 
 
 }

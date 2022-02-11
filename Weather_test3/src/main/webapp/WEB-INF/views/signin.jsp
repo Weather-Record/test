@@ -10,7 +10,9 @@
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<<script src="js/signin.js"></script>
 	<!------ Include the above in your HEAD tag ---------->
+
 
 <body>
 
@@ -24,10 +26,12 @@
     </div>
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
+    <form id="loginform" method="post" action="/signin">
+      <input type="text" id="id" class="fadeIn second" name="id" placeholder="ID">
+      <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">
+      <div id="msg" class="form-text"></div>
+	  <input type="button" id="loginbtn" value="Log In">
+	  <input type="button" id="signupbtn" value="Sign Up" onclick="location.href='/signup'">
     </form>
 
     <!-- Remind Passowrd -->
