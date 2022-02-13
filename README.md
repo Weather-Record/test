@@ -10,9 +10,8 @@ create table locgrid(
 	grid_y int
 );
 - 카카오톡으로 공유한 기상청 엑셀 파일을 관리자 페이지의 'LocGrid 업로드' 에서 업로드 -> 이를 위해서는 webapp 폴더 하단에 excel 폴더가 존재해야 함
-3. 로그인 성공 시 signin 과 signup 버튼이 invisible 되고 logout 버튼만 visible 하게 하고 싶음 -> 로그인 직후 메인 화면으로 이동했을 시에는 적용되나 다른 페이지로 이동하면 초기화됨
--> 수정 필요
-* todo list -> weathermember 테이블에 지역 컬럼 추가, 회원가입 페이지에서도 지역란 추가
+3. 로그인 성공 시 signin 과 signup 버튼이 invisible 되고 logout 버튼만 visible
+* todo list -> weathermember 테이블에 지역 컬럼 추가, 회원가입 페이지에서도 지역란 추가, 로그아웃 기능
 
 <0212>
 1. Login 기능 완성 -> Login 성공시, alert로 "Welcome nickname!" 알림 후, 메인 화면으로 전환.
