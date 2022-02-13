@@ -37,12 +37,11 @@
 		request.addEventListener('load', function(e){
 			 console.log(e.target.responseText);
 			 var map = JSON.parse(e.target.responseText);
-			 //alert(map);
 			 if(map.result == true){
 			 	alert("Welcome "+map.nickname+"!");
-			 	localStorage.setItem('LOGIN', true);
-			 	location.href = "/?LOGIN="+map.nickname;
-			 	//alert("Welcome "+map.nickname+"!");
+			 	location.href="/";
+			 	//localStorage.setItem('LOGIN', true);
+			 	//location.href = "/?LOGIN="+map.nickname;
 			 }else{
 			 	msg.innerHTML = "잘못된 이메일이거나 비밀번호가 틀렸습니다.";
 			 }

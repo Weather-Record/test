@@ -28,11 +28,7 @@
 </head>
 
 <body>
-	<%
-		String login=request.getParameter("LOGIN");
-		//pageContext.setAttribute("LOGIN", login);
-		session.setAttribute("LOGIN", login);
-	%>
+
 	<div class="d-flex" id="wrapper">
 		<!-- Sidebar-->
 		<div class="border-end bg-white" id="sidebar-wrapper">

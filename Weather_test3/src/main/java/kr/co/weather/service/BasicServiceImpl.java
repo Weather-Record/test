@@ -144,6 +144,7 @@ public class BasicServiceImpl implements BasicService {
 		}
 		//Session에 저장
 		request.getSession().setAttribute("userinfo", map);
+		request.getSession().setAttribute("LOGIN", map);
 		//System.out.println(map);
 		return map;
 	}

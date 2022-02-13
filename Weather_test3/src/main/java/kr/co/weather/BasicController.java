@@ -6,6 +6,7 @@ import javax.servlet.http.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import kr.co.weather.service.BasicService;
@@ -72,9 +73,12 @@ public class BasicController {
 	} 
 	
 	@ResponseBody
+	//@ModelAttribute("LOGIN")
 	@PostMapping("/signin")
-	public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response){
-		return basicService.login(request, response);
+	public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response, Model model){
+		Map<String ,Object> map = basicService.login(request, response);
+		model.addAttribute("LOGIN", map);
+		return map;
 	} 
 
 }
