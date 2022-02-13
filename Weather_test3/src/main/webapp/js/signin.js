@@ -39,8 +39,10 @@
 			 var map = JSON.parse(e.target.responseText);
 			 //alert(map);
 			 if(map.result == true){
-			 	location.href = "/";
 			 	alert("Welcome "+map.nickname+"!");
+			 	localStorage.setItem('LOGIN', true);
+			 	location.href = "/?LOGIN="+map.nickname;
+			 	//alert("Welcome "+map.nickname+"!");
 			 }else{
 			 	msg.innerHTML = "잘못된 이메일이거나 비밀번호가 틀렸습니다.";
 			 }

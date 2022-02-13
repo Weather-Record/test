@@ -28,6 +28,11 @@
 </head>
 
 <body>
+	<%
+		String login=request.getParameter("LOGIN");
+		//pageContext.setAttribute("LOGIN", login);
+		session.setAttribute("LOGIN", login);
+	%>
 	<div class="d-flex" id="wrapper">
 		<!-- Sidebar-->
 		<div class="border-end bg-white" id="sidebar-wrapper">
@@ -65,7 +70,7 @@
 									<a class="btn btn-primary" href="signup" role="button">Sign up</a>
 								</c:if>
 								<c:if test="${LOGIN != null}">
-									<a class="btn btn-outline-primary" href="signup" role="button">Log out</a>
+									<a class="btn btn-outline-primary" href="logout" role="button">Log out</a>
 								</c:if>
 							</div>
 						</ul>

@@ -61,7 +61,7 @@ public class WeatherController {
 		date = new String(date.substring(0, 4)+"년 "+date.substring(4,6)+"월 "+date.substring(6,8)+"일");
 		String time = list.getBaseTime();
 		time = new String(time.substring(0,2)+":"+time.substring(2,4));
-		String loc = region_1+region_2;
+		String loc = region_1+" "+region_2;
 		model.addAttribute("date", date);
 		model.addAttribute("time", time);
 		model.addAttribute("loc", loc);
