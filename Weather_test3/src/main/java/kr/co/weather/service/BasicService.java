@@ -17,7 +17,7 @@ public interface BasicService {
 	//회원 가입
 	public Map<String, Object> insertMember(HttpServletRequest request, HttpServletResponse response);
 	//로그인
-	//public List<Member> login(HttpServletRequest request, HttpServletResponse response);
+	public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response);
 	
 	//회원탈퇴
 	

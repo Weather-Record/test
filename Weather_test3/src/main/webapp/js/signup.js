@@ -74,6 +74,7 @@ window.addEventListener("load", function(event){
 		var formdata = new FormData();
 		formdata.append("id", id.value);
 		request.send(formdata);
+		console.log(formdata);
 		request.addEventListener("load", function(e){
 			var map = JSON.parse(e.target.responseText);
 			if(map.idcheck==false){
@@ -87,6 +88,16 @@ window.addEventListener("load", function(event){
 			}
 		});
 	});
+	
+	/*
+		#idcheck는 post뿐 아니라 get으로도 가능.
+		
+		var url = "idcheck?id=" + id.value;
+		var request = new XMLHttpRequest();
+		request.open("get", url, true);
+		var formdata = new FormData();
+		request.send(formdata);
+	*/
 	
 	//get 방식
 	emailcheck.addEventListener("click", function(e){

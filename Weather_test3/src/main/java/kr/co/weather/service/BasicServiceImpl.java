@@ -113,4 +113,38 @@ public class BasicServiceImpl implements BasicService {
 		}
 		return map; //가입 및 중복 결과 리턴
 	}
+
+	@Override
+	public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> map = new HashMap<>();
+		//로그인 성공 여부를 먼저 저장
+		map.put("result", false);
+		
+		String id = request.getParameter("id");
+		String pw = request.getParameter("password");
+		
+		//System.out.println("id & pw:"+id+" & "+pw);
+		
+		List<Member> list = mapper.login();
+	
+		try {
+			//id & pass 비교
+			for(Member user:list) {
+				if(id.equals(user.getMember_id()) &&(pw.equals(user.getMember_pw()))) {
+					//로그인 성공
+					map.put("result", true);
+					//필요한 정보 저장
+					map.put("id", user.getMember_id());
+					map.put("nickname", user.getNickname());
+					break;
+				}
+			}
+		}catch(Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
+		//Session에 저장
+		request.getSession().setAttribute("userinfo", map);
+		//System.out.println(map);
+		return map;
+	}
 }
