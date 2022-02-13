@@ -26,12 +26,12 @@ public class BasicController {
 	//관리자 페이지 -> 로그인 기능 구현 후 수정
 	@GetMapping("/adminpage")
 	public String adminpage() {
-		return "adminpage";
+		return "adminpage.page";
 	}
 
 	@GetMapping("/userpage")
 	public String userpage() {
-		return "userpage";
+		return "userpage.page";
 	}
 	
 	//회원가입

@@ -96,6 +96,9 @@ public class WeatherServiceImpl implements WeatherService {
 		JSONObject jsonObj = (JSONObject) jsonParser.parse(result);
 		JSONObject parse_response = (JSONObject) jsonObj.get("response");
 		JSONObject parse_body = (JSONObject) parse_response.get("body");// response 로 부터 body 찾아오기
+		if(parse_body==null) {
+			return w1;
+		}
 		JSONObject parse_items = (JSONObject) parse_body.get("items");// body 로 부터 items 받아오기
 		JSONArray parse_item = (JSONArray) parse_items.get("item");//itemlist : 뒤에 [ 로 시작하므로 jsonarray이다.
 

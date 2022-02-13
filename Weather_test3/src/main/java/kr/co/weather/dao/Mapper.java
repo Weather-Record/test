@@ -43,6 +43,15 @@ public interface Mapper {
 			+ "values(#{location_id}, #{record_date}, #{avg_tmp}, #{min_tmp}, #{max_tmp}, #{rain_hours}, #{day_rain}, #{max_insta_windspeed}, #{max_windspeed}, #{avg_windspeed}, #{avg_humid}, #{day_snow}, #{accumul_snow})")
 	public int insertRecordCsv(Record record);
 	
+	//LocGrid 테이블에 데이터 삽입(xlsx)
+	@Insert("insert into LocGrid(region_1, region_2, grid_x, grid_y) values(#{region_1}, #{region_2}, #{grid_x}, #{grid_y})")
+	public int insertLocGrid(LocGrid locGrid);
+	
+	//LocGrid 테이블 grid_x, grid_y 조회
+	@Select("select grid_x, grid_y from LocGrid where region_1=#{region_1} and region_2=#{region_2}")
+	public LocGrid selectLocGrid(@Param("region_1") String region_1, @Param("region_2") String region_2);
+	
+
 	//////////////////// 분석을 위한 데이터 call
 	// 빠른 검색 & 테스트를 위해 5월 데이터만 부르도록 임의로 지정해 놓음 
 	@Select("select * from record where location_id=#{location_id} and month(record_date)=5")

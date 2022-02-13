@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
 <!-- CSS only -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link href="css/signup.css" rel="stylesheet" />
 
@@ -23,18 +22,18 @@
 
 <body>
 	<div class="container">
-		<div class="col-md-6 mx-auto text-center" style="margin:0; padding:0;">
-			<div class="header-title">
+		<div class="col-md-6 text-center" style="margin:3rem; margin-left:auto; margin-right:auto;">
+			<div class="header-title text-center" style="margin:3rem; margin-left:auto; margin-right:auto;">
 				<h1 class="wv-heading--title">Sign Up</h1>
 				<h2 class="wv-heading--subtitle">Welcome to our Website!</h2>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4 mx-auto">
+			<div class="col-md-5 mx-auto">
 				<div class="myform form ">
-					<form id="signup" method="post">
+					<form class="form-horizontal" id="signup" method="post">
 					<div class="form-group">
-						<label for="id" class="form-label" style="display:block;">Id</label> 
+						<label for="id" class="form-label" style="display:block;">Id</label>
 						<input type="text" class="form-control my-input" style="display:inline; float:left; width:70%;" id="id" name="id" placeholder="Id를 입력하세요">
 						<a class="btn btn-outline-primary" style="width:30%;" id="idcheck" role="button">중복 확인</a>
 						<div id="idmsg" class="form-text"></div>
@@ -60,7 +59,7 @@
 
 					<div class="form-group">
 						<label for="nickname" class="form-label" style="display:block;">Nickname</label> 
-						<input type="text" class="form-control my-input" style="display:inline; float:left; width:70%;" id="nickname" name="nickname"> 
+						<input type="text" class="form-control my-input" style="display:inline; float:left; width:70%;" id="nickname" name="nickname" placeholder="Nickname을 입력하세요"> 
 						<a class="btn btn-outline-primary" style="width:30%;" id="nicknamecheck" role="button">중복 확인</a>
 						<div id="nicknamemsg"></div>
 					</div>

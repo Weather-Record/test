@@ -13,4 +13,7 @@ public interface ExcelService {
 		
 	//record 테이블에 자료를 삽입하기 위한 메서드
 	public boolean insertRecord(HttpServletRequest request, String filename);
+	
+	//기상청 격자 xlsx 파일 업로드
+	public boolean insertLocGrid(HttpServletRequest request, String filename);
 }

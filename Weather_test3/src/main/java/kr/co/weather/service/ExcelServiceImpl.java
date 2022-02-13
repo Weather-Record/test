@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.weather.dao.Mapper;
+import kr.co.weather.domain.LocGrid;
 import kr.co.weather.domain.Location;
 import kr.co.weather.domain.Record;
 
@@ -37,7 +39,7 @@ public class ExcelServiceImpl implements ExcelService {
 		String filename = UUID.randomUUID() + file.getOriginalFilename();
 
 		//전송할 파일 Path 만들기 -> 역슬래시 주의
-		File filepath = new File( uploadPath + filename);
+		File filepath = new File(uploadPath + filename);
 
 		try {
 			file.transferTo(filepath);
@@ -229,6 +231,72 @@ public class ExcelServiceImpl implements ExcelService {
 			System.out.println(e.getLocalizedMessage());
 		}
 		return result;
+	}
+
+	//
+	@Override
+	public boolean insertLocGrid(HttpServletRequest request, String filename) {
+		//excel 파일 경로 설정
+		File file = new File(request.getServletContext().getRealPath("/excel/") + filename);
+		//엑셀 파일 오픈
+		XSSFWorkbook wb;
+		try {
+			LocGrid locGrid = new LocGrid();
+			wb = new XSSFWorkbook(new FileInputStream(file));
+			Sheet sheet = wb.getSheetAt(0);
+			
+			int num = sheet.getPhysicalNumberOfRows();
+			int cnt=1;
+			String prevregion="";
+			main : for (int i=1; i<num; i++) {
+				Row row = sheet.getRow(i);
+				
+				String region_1 = "";
+				try {
+					region_1 = row.getCell(2).getStringCellValue();
+					locGrid.setRegion_1(region_1);
+				}catch(Exception e) {
+					System.out.println(e.getLocalizedMessage());
+				}
+				
+				String region_2 = "";
+				try {
+					region_2 = row.getCell(3).getStringCellValue();
+					if(!region_2.equals(prevregion)) {
+						locGrid.setRegion_2(region_2);
+					}else {
+						continue main;
+					}
+				}catch(Exception e) {
+					System.out.println(e.getLocalizedMessage());
+					continue main;
+				}
+				
+				int grid_x = 0;
+				try {
+					grid_x = Integer.parseInt(row.getCell(5).getStringCellValue());
+					locGrid.setGrid_x(grid_x);
+				}catch(Exception e) {
+					System.out.println(e.getLocalizedMessage());
+				}
+				
+				int grid_y = 0;
+				try {
+					grid_y = Integer.parseInt(row.getCell(6).getStringCellValue());
+					locGrid.setGrid_y(grid_y);
+				}catch(Exception e) {
+					System.out.println(e.getLocalizedMessage());
+				}
+				mapper.insertLocGrid(locGrid);
+				System.out.println(cnt+"번 데이터 삽입 성공 : "+locGrid.toString());
+				prevregion=region_2;
+				cnt++;
+			}
+		}catch(Exception e) {
+			System.out.println(e.getLocalizedMessage());
+			return false;
+		}
+		return true;
 	}
 
 }
