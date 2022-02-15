@@ -7,6 +7,8 @@ window.addEventListener("load", function(event){
 	var pw = document.getElementById("pw");
 	var pw1 = document.getElementById("pw1");
 	var nickname = document.getElementById("nickname");
+	var region_1 = document.getElementById("region_1");
+	var region_2 = document.getElementById("region_2");
 	
 	var msg = document.getElementById("msg");
 	var idmsg = document.getElementById("idmsg");
@@ -14,6 +16,7 @@ window.addEventListener("load", function(event){
 	var pwmsg = document.getElementById("pwmsg");
 	var pw1msg = document.getElementById("pw1msg");
 	var nicknamemsg = document.getElementById("nicknamemsg");
+	var addressmsg = document.getElementById("addressmsg");
 	
 	var idcheck = document.getElementById("idcheck");
 	var emailcheck = document.getElementById("emailcheck");
@@ -54,7 +57,11 @@ window.addEventListener("load", function(event){
 		if (pw.value.trim().length < 1) {
 			pwmsg.innerHTML = '비밀번호는 필수 정보입니다.<br/>';
 		} else {
-			//비밀번호 생성 조건 추가
+			var pwRegExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$/;
+			if (!pwRegExp.test(pw.value.trim())) {
+				pwmsg.innerHTML = '비밀번호는 숫자와 대소문자 그리고 특수문자가 포함되어야 합니다.<br/>';
+				pwmsg.style.color = 'red';
+			}
 		}
 	});
 	
@@ -133,8 +140,8 @@ window.addEventListener("load", function(event){
 	  		var map = JSON.parse(e.target.responseText);
 	  		if(map.nicknamecheck == false){
 			 	nicknamemsg.innerHTML = "사용 불가능한 별명입니다.";
-			 	email.value="";
-				email.placeholder = "새로운 별명을 입력해주세요.";
+			 	nickname.value="";
+				nicknamemsg.placeholder = "새로운 별명을 입력해주세요.";
 			 	nicknamemsg.style.color = "Red";
 			}else{
 				nicknamemsg.innerHTML = "사용 가능한 별명입니다.";
@@ -145,74 +152,89 @@ window.addEventListener("load", function(event){
 	
 	
 	signupbtn.addEventListener("click", function(event){
-		var flag = false;
-		//idmsg.innerHTML = '';
-		//emailmsg.innerHTML = '';
-		//pwmsg.innerHTML = ''
-		//nicknamemsg.innerHTML = '';
+		var flag = true;
 		
 		if (id.value.trim().length < 1) {
-			alert("ID를 확인해주세요");
-			flag = true;
+			idmsg.innerHTML = '이메일은 필수 입력입니다.<br/>';
+			flag = false;
 		} 
 		
 		var emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 		if (email.value.trim().length < 1 || !emailRegExp.test(email.value.trim())) {
-			alert("이메일을 확인해주세요");
-			flag = true;
+			emailmsg.innerHTML = '잘못된 이메일 형식입니다.<br/>';
+			flag = false;
 		}
 
-		if (pw.value.trim().length < 1 || pw.value.trim() !== pw1.value.trim()) {
-			alert("비밀번호를 확인해주세요");
-			flag = true;
+		var pwRegExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$/;
+		if (pw.value.trim().length < 1 || !pwRegExp.test(pw.value.trim())) {
+			pwmsg.innerHTML = '비밀번호는 숫자와 대소문자 그리고 특수문자가 포함되어야 합니다.<br/>다시 확인해주세요.<br/>';
+			flag = false;
+		}
+		
+		if (pw.value.trim() !== pw1.value.trim()) {
+			pw1msg.innerHTML = '2개의 비밀번호는 같아야 합니다.<br/>';
+			flag = false;
 		}
 
 		var nicknameRegExp = /^[a-zA-z가-힣0-9]{2,10}$/;
 		if (nickname.value.trim().length < 1 || !nicknameRegExp.test(nickname.value.trim())) {
-			alert("별명을 확인해주세요");
-			flag = true;
+			nicknamemsg.innerHTML = '닉네임은 영문 한글 숫자로 2자 이상 5자 이하이어야 합니다.<br/>다시 확인해주세요.<br/>';
+			flag = false;
 		}
 		
-		if(flag==false){
-			var url="signup";
-	  		var request=new XMLHttpRequest();
-		  	
-			request.open("post", url, true);
-			var formdata = new FormData(signup);
-			request.send(formdata);
-			request.addEventListener('load', function(e){
-				var map = JSON.parse(e.target.responseText);
-				if(map.result == true){
-					alert("회원가입 성공");
-			 		window.location.replace("/");
-			 		sesssion.invalidate();
-				}else{
-					//실패했을 때 데이터가 떠버리는 문제
-			 		alert("회원가입 실패")
-			 		location.reload();
-			 		if(map.idcheck == false){
-			 			idmsg.innerHTML = "사용 불가능한 ID입니다.";
-			 			idmsg.style.color = "Red";
-			 		}else{
-			 			idmsg.innerHTML = "사용 가능한 ID입니다.";
-			 			idmsg.style.color = "Blue";
-			 		}
-			 		if(map.emailcheck == false){
-			 			emailmsg.innerHTML = "사용 불가능한 이메일입니다.";
-			 			emailmsg.style.color = "Red";
-			 		}else{
-			 			emailmsg.innerHTML = "사용 가능한 이메일입니다.";
-			 			emailmsg.style.color = "Blue";
-			 		}
-			 		if(map.nicknamecheck == false){
-			 			nicknamemsg.innerHTML = "사용 불가능한 닉네임입니다.";
-			 			nicknamemsg.style.color = "Red";
-			 		}else{
-			 			nicknamemsg.innerHTML = "사용 가능한 닉네임입니다.";
-			 			nicknamemsg.style.color = "Blue";
-			 		}
-			 	}
-		 	});
+		if (region_1.value.trim()=='시/도' || region_2.value.trim()=='시/군/구'){
+			addressmsg.innerHTML = '주소는 필수 입력 사항입니다.<br/>';
+			addressmsg.style.color='gray';
+			flag=false;
 		}
+		
+		//클라이언트 유효성 검사에 실패하면 전송하지 말고 중지
+		if (flag == false) {
+			return;
+			event.preventDefault();
+		}
+		
+		var url="signup";
+	  	var request=new XMLHttpRequest();
+		  	
+		request.open("post", url, true);
+		var formdata = new FormData(signup);
+		request.send(formdata);
+		
+		// 현재 화면 이동이 복불복,,
+		request.addEventListener('load', function show(e){
+			var map = JSON.parse(e.target.responseText);
+			
+			alert(map.result);
+			if(map.result == true){
+			 	window.location.replace('/');
+			 	alert("회원가입 성공");
+			}else{
+				alert("회원가입 실패");
+				event.preventDefault();
+			 	//location.reload();
+			 	if(map.idcheck == false){
+			 		idmsg.innerHTML = "사용 불가능한 ID입니다.";
+			 		idmsg.style.color = "Red";
+			 	}else{
+			 		idmsg.innerHTML = "사용 가능한 ID입니다.";
+			 		idmsg.style.color = "Blue";
+			 	}
+			 	if(map.emailcheck == false){
+			 		emailmsg.innerHTML = "사용 불가능한 이메일입니다.";
+			 		emailmsg.style.color = "Red";
+			 	}else{
+			 		emailmsg.innerHTML = "사용 가능한 이메일입니다.";
+			 		emailmsg.style.color = "Blue";
+			 	}
+			 	if(map.nicknamecheck == false){
+			 		nicknamemsg.innerHTML = "사용 불가능한 닉네임입니다.";
+			 		nicknamemsg.style.color = "Red";
+			 	}else{
+			 		nicknamemsg.innerHTML = "사용 가능한 닉네임입니다.";
+			 		nicknamemsg.style.color = "Blue";
+			 	}
+			 }
+		 });
 	});
 });

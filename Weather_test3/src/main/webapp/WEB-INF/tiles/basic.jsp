@@ -66,7 +66,9 @@
 									<a class="btn btn-primary" href="signup" role="button">Sign up</a>
 								</c:if>
 								<c:if test="${LOGIN != null}">
-									<a class="btn btn-outline-primary" href="logout" role="button">Log out</a>
+									<p>${LOGIN.nickname} 님 &nbsp;&nbsp;</p>
+									<a class="btn btn-outline-primary" href="mypage" role="button">my page</a>
+									<a class="btn btn-outline-primary" id="logout" href="logout" role="button">Log out</a>
 								</c:if>
 							</div>
 						</ul>
@@ -80,5 +82,29 @@
 		</div>
 	</div>
 </body>
-
+	<script type="text/javascript">
+		/*
+		var logout = document.getElementById("logout");
+		
+		logout.addEventListener('click', function(e){
+			alert()
+			var url="logout"
+	  		var request=new XMLHttpRequest();
+	  		request.open("get", url, true);
+	  		request.send('');
+	  		request.addEventListener('load', function(e){
+	  			var map = JSON.parse(e.target.responseText);
+	  			if(map.emailcheck == false){
+			 		emailmsg.innerHTML = "사용 불가능한 이메일입니다.";
+			 		email.value="";
+					email.placeholder = "새로운 이메일을 입력해주세요.";
+			 		emailmsg.style.color = "Red";
+				}else{
+					emailmsg.innerHTML = "사용 가능한 이메일입니다.";
+				 	emailmsg.style.color = "Blue";
+				}
+	  		});
+		});
+		*/
+	</script>
 </html>

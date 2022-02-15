@@ -46,6 +46,14 @@ public class BasicController {
 	public String login() {
 		return "signin.page";
 	}
+	
+	//로그아웃 -> modal로 수정 필요
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		//세션 초기화
+		session.invalidate();
+		return "redirect:/";
+	}
 
 	//Data Control -> RestController
 	@ResponseBody
@@ -73,12 +81,9 @@ public class BasicController {
 	} 
 	
 	@ResponseBody
-	//@ModelAttribute("LOGIN")
 	@PostMapping("/signin")
 	public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response, Model model){
-		Map<String ,Object> map = basicService.login(request, response);
-		model.addAttribute("LOGIN", map);
-		return map;
+		return basicService.login(request, response);
 	} 
 
 }

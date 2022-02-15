@@ -71,7 +71,7 @@ public interface Mapper {
 	@Select("select nickname from weathermember where nickname = #{nickname}")
 	public String nicknameCheck(String nickname);
 	//Member 테이블에 회원정보 삽입하기 >> not yet
-	@Insert("insert into weathermember(member_id, member_pw, member_email, nickname) values (#{member_id}, #{member_pw}, #{member_email}, #{nickname})")
+	@Insert("insert into weathermember(member_id, member_pw, member_email, nickname, address) values (#{member_id}, #{member_pw}, #{member_email}, #{nickname}, #{address})")
 	public int insertMember(Member member);
 		
 	//login

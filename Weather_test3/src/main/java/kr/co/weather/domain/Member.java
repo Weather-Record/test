@@ -2,8 +2,8 @@ package kr.co.weather.domain;
 
 import java.util.Date;
 
+//member_num 삭제, address 추가
 public class Member {
-	private int member_num;
 	private String member_id;
 	private String member_pw;
 	private String member_email;
@@ -11,13 +11,8 @@ public class Member {
 	private Date info_modify_date;
 	private String nickname;
 	private String group_id;
+	private String address;
 	
-	public int getMember_num() {
-		return member_num;
-	}
-	public void setMember_num(int member_num) {
-		this.member_num = member_num;
-	}
 	public String getMember_id() {
 		return member_id;
 	}
@@ -60,11 +55,18 @@ public class Member {
 	public void setGroup_id(String group_id) {
 		this.group_id = group_id;
 	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address; 
+	}
+
 	@Override
 	public String toString() {
-		return "Member [member_num=" + member_num + ", member_id=" + member_id + ", member_pw=" + member_pw
-				+ ", member_email=" + member_email + ", signup_date=" + signup_date + ", info_modify_date="
-				+ info_modify_date + ", nickname=" + nickname + ", group_id=" + group_id + "]";
+		return "Member [member_id=" + member_id + ", member_pw=" + member_pw + ", member_email=" + member_email
+				+ ", signup_date=" + signup_date + ", info_modify_date=" + info_modify_date + ", nickname=" + nickname
+				+ ", group_id=" + group_id + ", address=" + address + "]";
 	}
 
 }

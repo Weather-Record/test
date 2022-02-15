@@ -62,6 +62,7 @@ public class BasicServiceImpl implements BasicService {
 		return map;
 	}
 
+	//password 해시해서 저장하도록 수정 필요 -> 조회문에서도 함께 수정해야 함
 	@Override
 	public Map<String, Object> insertMember(HttpServletRequest request, HttpServletResponse response) {
 		// id/nick/email check 결과 저장 + false로 초기화
@@ -76,7 +77,16 @@ public class BasicServiceImpl implements BasicService {
 		String email = request.getParameter("email");
 		String pw = request.getParameter("pw");
 		String nickname = request.getParameter("nickname");
-
+		//addr 추가
+		String region_1 = request.getParameter("region_1");
+		String region_2 = request.getParameter("region_2");
+		try {
+			String [] temp = region_2.split(" ");
+			if(temp.length>1) region_2=new String(temp[0]+temp[1]);
+		}catch(Exception e){	
+			System.out.println(e.getLocalizedMessage());
+		}
+		String address = region_1 + " " +region_2;
 
 		//id 체크
 		String idresult = mapper.idCheck(id);
@@ -104,6 +114,7 @@ public class BasicServiceImpl implements BasicService {
 			member.setMember_email(email);
 			member.setMember_pw(pw);
 			member.setNickname(nickname);
+			member.setAddress(address);
 
 			//회원 가입
 			int result = mapper.insertMember(member);

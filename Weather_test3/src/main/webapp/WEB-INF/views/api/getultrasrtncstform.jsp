@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<script src="js/realtime_api.js"></script>
+
 <title>초단기실황조회 FORM</title>
 </head>
 <body>
@@ -73,6 +75,7 @@
 	</form>
 	-->	
 </body>
+<!--
 	<script>
 		//주소 대분류값 선택에 따른 소분류값 출력
 		function addrchange(e){
@@ -123,4 +126,5 @@
 			}
 		}
 	</script>
+-->
 </html>
