@@ -70,7 +70,7 @@
 									<a class="btn btn-primary" href="signup" role="button">Sign up</a>
 								</c:if>
 								<c:if test="${LOGIN != null}">
-									<a class="btn btn-outline-primary" href="logout" role="button">Log out</a>
+									<a class="btn btn-outline-primary" href="signout" role="button">Log out</a>
 								</c:if>
 							</div>
 						</ul>

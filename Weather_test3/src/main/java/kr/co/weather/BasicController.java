@@ -45,6 +45,12 @@ public class BasicController {
 	public String login() {
 		return "signin.page";
 	}
+	
+	@GetMapping("/signout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
 
 	//Data Control -> RestController
 	@ResponseBody
