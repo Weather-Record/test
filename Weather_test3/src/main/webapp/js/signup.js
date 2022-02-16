@@ -203,15 +203,13 @@ window.addEventListener("load", function(event){
 		
 		// 현재 화면 이동이 복불복,,
 		request.addEventListener('load', function show(e){
-			var map = JSON.parse(e.target.responseText);
-			
-			alert(map.result);
+			var map = JSON.parse(request.responseText);
+
 			if(map.result == true){
-			 	window.location.replace('/');
 			 	alert("회원가입 성공");
+			 	window.location.replace('/');
 			}else{
 				alert("회원가입 실패");
-				event.preventDefault();
 			 	//location.reload();
 			 	if(map.idcheck == false){
 			 		idmsg.innerHTML = "사용 불가능한 ID입니다.";
