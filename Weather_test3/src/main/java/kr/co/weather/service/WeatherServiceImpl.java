@@ -7,6 +7,7 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -26,6 +27,31 @@ public class WeatherServiceImpl implements WeatherService {
 	@Autowired
 	private Mapper mapper;
 
+	//기간별 날씨 데이터 조회
+	@Transactional
+	@Override
+	public Map<String, Object> selectWeatherPeriod(HttpServletRequest request){
+		List<Record> list = new ArrayList<Record>();
+		String loc_state = request.getParameter("loc_state");
+		String loc_detail = request.getParameter("loc_detail");
+		String start = request.getParameter("datepicker_start");
+		String end = request.getParameter("datepicker_end");
+		
+		Location location = new Location();
+		location.setLocation_state(loc_state);
+		location.setLocation_name(loc_detail);
+		int location_id = mapper.selectLocation(location).getLocation_id();
+		
+		list = mapper.selectWeatherPeriod(location_id, start, end);
+		
+		Map<String, Object> map = new HashedMap();
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	
+	
 	//격자 데이터 조회
 	@Transactional
 	@Override
@@ -38,7 +64,7 @@ public class WeatherServiceImpl implements WeatherService {
 	@Override
 	public Weather getultrasrtncst(String grid_x, String grid_y) throws IOException, ParseException, NullPointerException {
 		Weather w1 = new Weather();
-
+		//System.out.println(w1);
 		Date sysdate = new Date();
 		DateFormat datesdf = new SimpleDateFormat("yyyyMMdd");
 		DateFormat timesdf = new SimpleDateFormat("kkmm");
@@ -89,7 +115,7 @@ public class WeatherServiceImpl implements WeatherService {
 		rd.close();
 		conn.disconnect();
 		String result = sb.toString();
-		System.out.println("결과 : " + result);
+		//System.out.println("결과 : " + result);
 
 		//문자열을 JSON으로 파싱함. 마지막 배열 형태로 저장된 데이터까지 파싱해 냄 
 		JSONParser jsonParser = new JSONParser();

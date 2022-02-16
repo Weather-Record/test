@@ -53,6 +53,14 @@ public interface Mapper {
 	
 
 	//////////////////// 분석을 위한 데이터 call
+	//location_id 조회
+	@Select("select location_id from location where location_name=#{location_name} and location_state=#{location_state}")
+	public Location selectLocation(Location location);
+	
+	//기간별 날씨 데이터 조회
+	@Select("select * from record where location_id=#{location_id} and record_date>=#{start} and record_date<=#{end}")
+	public List<Record> selectWeatherPeriod(@Param("location_id") int location_id, @Param("start") String start, @Param("end") String end);
+	
 	// 빠른 검색 & 테스트를 위해 5월 데이터만 부르도록 임의로 지정해 놓음 
 	@Select("select * from record where location_id=#{location_id} and month(record_date)=5")
 	public List<Record> searchRecord(@Param("location_id") Integer location_id);

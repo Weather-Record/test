@@ -35,7 +35,7 @@
 			<div class="sidebar-heading border-bottom bg-light"><a href = "/" style="text-decoration:none">Weather Analysis</a></div>
 			<div class="list-group list-group-flush">
 				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="getultrasrtncst">실시간 날씨 현황</a> 
-				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">기간별 날씨 현황</a> 
+				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="periodweather">기간별 날씨 현황</a> 
 				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">날씨 예측</a> 
 				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="adminpage">관리자 페이지</a>
 				 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="userpage">일반 사용자 페이지</a>
