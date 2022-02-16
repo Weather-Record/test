@@ -1,4 +1,12 @@
 <0216>
+1. 지역 select 관련 script 분리
+2. weathermember 테이블에 address 컬럼 추가 및 회원가입 폼에도 추가 -> address varchar(100)
+   -> member_num 컬럼은 삭제하고 member_id 컬럼을 primary key로 사용해도 좋을 것 같습니다.
+3. 회원가입 처리는 수행되나 페이지 이동이 안 되고 있음 -> 수정 필요
+* todo list -> 회원가입시 패스워드 해시 처리, 완료되면 조회 시에도 해시된 값과 비교할 수 있도록 수정 필요
+
+
+<0216>
 1. log out 기능 추가. log out 시, 메인으로 전환됨 
 
 <0213>
