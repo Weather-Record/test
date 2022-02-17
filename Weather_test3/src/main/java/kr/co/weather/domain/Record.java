@@ -2,9 +2,12 @@ package kr.co.weather.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Record {
 	private int record_id;
 	private int location_id;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date record_date;
 	private double avg_tmp;
 	private double min_tmp;

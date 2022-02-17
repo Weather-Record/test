@@ -7,7 +7,6 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -44,9 +43,15 @@ public class WeatherServiceImpl implements WeatherService {
 		
 		list = mapper.selectWeatherPeriod(location_id, start, end);
 		
-		Map<String, Object> map = new HashedMap();
-		map.put("list", list);
+		for(int i=0; i<list.size(); i++) {
+			Calendar cal = new GregorianCalendar();
+			cal.setTime(list.get(i).getRecord_date());
+			cal.add(cal.DAY_OF_MONTH, 1);
+			list.get(i).setRecord_date(cal.getTime());
+		}
 		
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
 		return map;
 	}
 	

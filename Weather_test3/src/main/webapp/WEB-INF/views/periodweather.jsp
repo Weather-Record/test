@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +15,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- 사용자 정의 자바스크립트 -->
-<script src="js/linechart.js"></script>
+<!-- <script src="js/linechart.js"></script> -->
 <script src="js/weather_location.js"></script>
 <script src="js/periodweather.js"></script>
 
@@ -57,8 +57,9 @@
 		</div>
 		<button class="btn btn-outline-primary" id="weatherquery" style="margin-top:2rem;">조회</button>
 	</div>
-
-	<canvas id="line-chart"></canvas>
+	<div style="width:1000px; height:750px;">
+		<canvas id="line-chart"></canvas>
+	</div>
 </body>
 
 <script>

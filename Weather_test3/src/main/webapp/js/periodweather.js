@@ -17,11 +17,56 @@ window.addEventListener('load', function(event){
 		formdata.append("datepicker_end", datepicker_end.value);
 		request.send(formdata);
 		console.log(formdata);
-		request.addEventListener("load", function(e){
+		
+		request.addEventListener("load", function(e){	
 			var map = JSON.parse(e.target.responseText);
 			//받아온 데이터 처리 -> linechart와 연관시키기
 			var list = map.list;
 			console.log(list);
+			var temp = Object.entries(list);
+			console.log(temp[0][1].record_id);
+			var date = [];
+			var min_tmp = [];
+			var avg_tmp = [];
+			var max_tmp = [];
+			for(var i=0; i<temp.length; i++){
+				date.push(temp[i][1].record_date);
+				min_tmp.push(temp[i][1].min_tmp);
+				avg_tmp.push(temp[i][1].avg_tmp);
+				max_tmp.push(temp[i][1].max_tmp);
+			}
+			
+			var context = document.getElementById('line-chart').getContext('2d');
+			var chart = new Chart(context, {
+			  type: 'line',
+			  data: {
+			    labels: date,
+			    datasets: [{ 
+			        data: min_tmp,
+			        label: "최소 온도",
+			        borderColor: "#3e95cd",
+			        fill: false
+			      }, { 
+			        data: avg_tmp,
+			        label: "평균 온도",
+			        borderColor: "#8e5ea2",
+			        fill: false
+			      }, { 
+			        data: max_tmp,
+			        label: "최대 온도",
+			        borderColor: "#3cba9f",
+			        fill: false
+			      }
+			    ]
+			  },
+			  options: {
+			    title: {
+			      display: true,
+			      text: '온도 변화 추이'
+			    }
+			  }
+			});
+			
 		});
 	
 	});
