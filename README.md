@@ -1,3 +1,9 @@
+<0217>
+1. 기간별 날씨 데이터 조회
+-> 현재 데이터 오는 것까지 확인됨. 요청받은 기간에 대해서 출력할 구간 결정 필요
+-> 구간 결정 완료시 해당 데이터를 chart.js 라이브러리를 통해 line-chart 출력
+
+
 <0216>
 1. 지역 select 관련 script 분리
 2. weathermember 테이블에 address 컬럼 추가 및 회원가입 폼에도 추가 -> address varchar(100)
