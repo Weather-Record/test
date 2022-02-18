@@ -53,35 +53,4 @@ public class BasicController {
 		return "redirect:/";
 	}
 
-	//Data Control -> RestController
-	@ResponseBody
-	@PostMapping("/signup")
-	public Map<String, Object> insertMember(HttpServletRequest request, HttpServletResponse response){
-		return basicService.insertMember(request, response);
-	}
-	
-	@ResponseBody
-	@PostMapping("/idcheck")
-	public Map<String, Object> idCheck(HttpServletRequest request, HttpServletResponse response){
-		return basicService.idCheck(request, response);
-	} 
-	
-	@ResponseBody
-	@GetMapping("/emailcheck")
-	public Map<String, Object> emailCheck(HttpServletRequest request, HttpServletResponse response){
-		return basicService.emailCheck(request, response);
-	} 
-
-	@ResponseBody
-	@GetMapping("/nicknamecheck")
-	public Map<String, Object> nicknameCheck(HttpServletRequest request, HttpServletResponse response){
-		return basicService.nicknameCheck(request, response);
-	} 
-	
-	@ResponseBody
-	@PostMapping("/signin")
-	public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response, Model model){
-		return basicService.login(request, response);
-	} 
-
 }

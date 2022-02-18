@@ -204,7 +204,7 @@ window.addEventListener("load", function(event){
 		// 현재 화면 이동이 복불복,,
 		request.addEventListener('load', function show(e){
 			var map = JSON.parse(request.responseText);
-
+			console.log(map);
 			if(map.result == true){
 			 	alert("회원가입 성공");
 			 	window.location.replace('/');
