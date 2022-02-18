@@ -32,7 +32,7 @@
 		<div class="row">
 			<div class="col-md-5 mx-auto">
 				<div class="myform form">
-					<form class="form-horizontal" id="signup">
+					<form class="form-horizontal" id="signup" method="post" action="/signup">
 					<div class="form-group">
 						<label for="id" class="form-label" style="display:block;">Id</label>
 						<input type="text" class="form-control my-input" style="display:inline; float:left; width:70%;" id="id" name="id" placeholder="Id를 입력하세요">
