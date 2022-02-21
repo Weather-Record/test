@@ -4,6 +4,8 @@ import java.util.*;
 import javax.servlet.http.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.weather.dao.Mapper;
@@ -14,11 +16,12 @@ public class BasicServiceImpl implements BasicService {
 	@Autowired
 	private Mapper mapper;
 
+	//입력받은 parameter들을 trim 및 대문자 또는 소문자로 통일 -> 대문자로 통일
 	@Override
 	public Map<String, Object> idCheck(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<>();
 		
-		String id = request.getParameter("id");
+		String id = request.getParameter("id").trim().toUpperCase();
 		//System.out.println("요청된 id : "+id);
 		String result = mapper.idCheck(id);
 
@@ -35,7 +38,7 @@ public class BasicServiceImpl implements BasicService {
 	public Map<String, Object> emailCheck(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<>();
 
-		String email = request.getParameter("email");
+		String email = request.getParameter("email").trim();
 		String result = mapper.emailCheck(email);
 
 		//없으면 result = true
@@ -51,7 +54,7 @@ public class BasicServiceImpl implements BasicService {
 	public Map<String, Object> nicknameCheck(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<>();
 
-		String nickname = request.getParameter("nickname");
+		String nickname = request.getParameter("nickname").trim();
 		String result = mapper.nicknameCheck(nickname);
 		//없으면 result = true
 		if(result==null) {
@@ -73,10 +76,10 @@ public class BasicServiceImpl implements BasicService {
 		map.put("nicknamecheck", false); //nick 확인 결과
 
 		// read parameter
-		String id = request.getParameter("id");
-		String email = request.getParameter("email");
-		String pw = request.getParameter("pw");
-		String nickname = request.getParameter("nickname");
+		String id = request.getParameter("id").trim().toUpperCase();
+		String email = request.getParameter("email").trim();
+		String pw = BCrypt.hashpw(request.getParameter("pw").trim(), BCrypt.gensalt()); //비밀번호 해시
+		String nickname = request.getParameter("nickname").trim();
 		//addr 추가
 		String region_1 = request.getParameter("region_1");
 		String region_2 = request.getParameter("region_2");
@@ -131,8 +134,8 @@ public class BasicServiceImpl implements BasicService {
 		//로그인 성공 여부를 먼저 저장
 		map.put("result", false);
 		
-		String id = request.getParameter("id");
-		String pw = request.getParameter("password");
+		String id = request.getParameter("id").trim().toUpperCase();
+		String pw = request.getParameter("password").trim();
 		
 		//System.out.println("id & pw:"+id+" & "+pw);
 		
@@ -141,7 +144,7 @@ public class BasicServiceImpl implements BasicService {
 		try {
 			//id & pass 비교
 			for(Member user:list) {
-				if(id.equals(user.getMember_id()) &&(pw.equals(user.getMember_pw()))) {
+				if(id.equals(user.getMember_id()) && BCrypt.checkpw(pw, user.getMember_pw())) {
 					//로그인 성공
 					map.put("result", true);
 					//필요한 정보 저장

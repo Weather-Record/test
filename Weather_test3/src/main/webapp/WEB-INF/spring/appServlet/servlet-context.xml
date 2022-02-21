@@ -26,8 +26,8 @@
 		
 	<!-- download 라는 뷰 이름이 왔을 때 DownloadView 로 출력하도록 해주는 설정 -->
 	<!-- com.weather.predict.view 패키지의 DownloadView 를 실행하도록 함 -->
-	<!-- <beans:bean id="download" class="com.weather.predict.view.DownloadView" /> -->
-	
+	<!-- <beans:bean id="download" class="com.weather.predict.view.DownloadView" /> -->	
+
 	<!-- Tiles -->
     <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <beans:property name="definitions">
