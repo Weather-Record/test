@@ -79,17 +79,6 @@
 			</nav>
 			<!-- Page content-->
 			<div class="container-fluid">
-				<div id="userlocation">
-					<c:if test="${LOGIN!=null}">
-						<p class="h2">${userinfo.address} 현재 날씨</p>
-						<li>온도 : 
-							<c:if test="${winfo != null}">${winfo.getT1h()} °C</c:if>
-						</li>
-						<li>
-							<c:if test="${winfo != null}">습도 : ${winfo.getReh()} %</c:if>
-						</li>
-					</c:if>				
-				</div>
 				<div id="main"><tiles:insertAttribute name="body" /></div>
 			</div>
 		</div>

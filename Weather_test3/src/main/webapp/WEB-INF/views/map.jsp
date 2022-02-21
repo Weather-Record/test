@@ -5,6 +5,17 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cc86cb6785a5cca164aac930b0b9a06a&libraries=services,clusterer,drawing"></script>
 	
 <div>
+	<div id="userlocation">
+		<c:if test="${LOGIN!=null}">
+			<p class="h2">${userinfo.address} 현재 날씨</p>
+			<li>온도 : 
+				<c:if test="${winfo != null}">${winfo.getT1h()} °C</c:if>
+			</li>
+			<li>
+				<c:if test="${winfo != null}">습도 : ${winfo.getReh()} %</c:if>
+			</li>
+		</c:if>				
+	</div>
 	<div id="map" style="width: 450px; height: 600px;"></div>
 </div>
 <script>
