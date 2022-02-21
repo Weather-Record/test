@@ -37,9 +37,12 @@
 				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="getultrasrtncst">실시간 날씨 현황</a> 
 				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="periodweather">기간별 날씨 현황</a> 
 				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">날씨 예측</a> 
-				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="adminpage">관리자 페이지</a>
-				 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="userpage">일반 사용자 페이지</a>
-				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a> 
+				<c:if test="${userinfo.group_id == 'admin'}">
+					<a class="list-group-item list-group-item-action list-group-item-light p-3" href="adminpage">관리자 페이지</a>
+				</c:if>
+				<c:if test="${LOGIN != null}">
+					<a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a> 
+				</c:if>
 				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
 			</div>
 		</div>
@@ -65,7 +68,7 @@
 									<a class="btn btn-primary" href="signup" role="button">Sign up</a>
 								</c:if>
 								<c:if test="${LOGIN != null}">
-									<p>${LOGIN.nickname} 님 &nbsp;&nbsp;</p>
+									<p>${userinfo.nickname} 님 &nbsp;&nbsp;</p>
 									<a class="btn btn-outline-primary" href="mypage" role="button">my page</a>
 									<a class="btn btn-outline-primary" href="signout" role="button">Log out</a>
 								</c:if>
@@ -76,6 +79,17 @@
 			</nav>
 			<!-- Page content-->
 			<div class="container-fluid">
+				<div id="userlocation">
+					<c:if test="${LOGIN!=null}">
+						<p class="h2">${userinfo.address} 현재 날씨</p>
+						<li>온도 : 
+							<c:if test="${winfo != null}">${winfo.getT1h()} °C</c:if>
+						</li>
+						<li>
+							<c:if test="${winfo != null}">습도 : ${winfo.getReh()} %</c:if>
+						</li>
+					</c:if>				
+				</div>
 				<div id="main"><tiles:insertAttribute name="body" /></div>
 			</div>
 		</div>

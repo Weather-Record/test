@@ -83,8 +83,8 @@ public interface Mapper {
 	public int insertMember(Member member);
 		
 	//login
-	@Select("select member_id, member_pw, nickname from weathermember")
-	public List<Member> login();
+	@Select("select * from weathermember where member_id=#{member_id}")
+	public List<Member> login(Member member);
 	
 	
 	

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.co.weather.dao.Mapper;
+import kr.co.weather.domain.LocGrid;
 import kr.co.weather.domain.Member;
 
 @Service
@@ -128,6 +129,9 @@ public class BasicServiceImpl implements BasicService {
 		return map; //가입 및 중복 결과 리턴
 	}
 
+	@Autowired
+	private WeatherService wservice;
+	
 	@Override
 	public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<>();
@@ -139,7 +143,10 @@ public class BasicServiceImpl implements BasicService {
 		
 		//System.out.println("id & pw:"+id+" & "+pw);
 		
-		List<Member> list = mapper.login();
+		Member member = new Member();
+		member.setMember_id(id);
+		List<Member> list = mapper.login(member);
+		if(list==null) return map; // 해당하는 id가 없는 경우 return
 	
 		try {
 			//id & pass 비교
@@ -150,6 +157,13 @@ public class BasicServiceImpl implements BasicService {
 					//필요한 정보 저장
 					map.put("id", user.getMember_id());
 					map.put("nickname", user.getNickname());
+					map.put("group_id", user.getGroup_id());
+					String address = user.getAddress();
+					String region_1 = address.split(" ")[0];
+					String region_2 = address.split(" ")[1];
+					LocGrid locGrid = mapper.selectLocGrid(region_1, region_2);
+					map.put("address", address);
+					request.getSession().setAttribute("winfo", wservice.getultrasrtncst(locGrid.getGrid_x()+"", locGrid.getGrid_y()+""));
 					break;
 				}
 			}
@@ -158,7 +172,7 @@ public class BasicServiceImpl implements BasicService {
 		}
 		//Session에 저장
 		request.getSession().setAttribute("userinfo", map);
-		request.getSession().setAttribute("LOGIN", map);
+		request.getSession().setAttribute("LOGIN", true);
 		//System.out.println(map);
 		return map;
 	}
