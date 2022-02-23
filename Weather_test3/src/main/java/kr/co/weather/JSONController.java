@@ -44,6 +44,11 @@ public class JSONController {
 	@PostMapping("/signin")
 	public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response, Model model){
 		return basicService.login(request, response);
-	} 
+	}
+	
+	@PostMapping("/modify")
+	public Map<String, Object> modify(HttpServletRequest request){
+		return basicService.modify(request);
+	}
 
 }

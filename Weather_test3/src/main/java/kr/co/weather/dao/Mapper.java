@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import kr.co.weather.domain.*;
@@ -85,6 +86,10 @@ public interface Mapper {
 	//login
 	@Select("select * from weathermember where member_id=#{member_id}")
 	public List<Member> login(Member member);
+	
+	//modify
+	@Update("update weathermember set member_pw=#{member_pw}, address=#{address} where member_id=#{member_id}")
+	public void modify(Member member);
 	
 	
 	

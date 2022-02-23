@@ -41,7 +41,7 @@
 					<a class="list-group-item list-group-item-action list-group-item-light p-3" href="adminpage">관리자 페이지</a>
 				</c:if>
 				<c:if test="${LOGIN != null}">
-					<a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a> 
+					<a class="list-group-item list-group-item-action list-group-item-light p-3" href="profile">Profile</a> 
 				</c:if>
 				<a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
 			</div>
@@ -69,7 +69,7 @@
 								</c:if>
 								<c:if test="${LOGIN != null}">
 									<p>${userinfo.nickname} 님 &nbsp;&nbsp;</p>
-									<a class="btn btn-outline-primary" href="mypage" role="button">my page</a>
+									<a class="btn btn-outline-primary" href="profile" role="button">my page</a>
 									<a class="btn btn-outline-primary" href="signout" role="button">Log out</a>
 								</c:if>
 							</div>

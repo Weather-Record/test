@@ -18,6 +18,8 @@ public interface BasicService {
 	public Map<String, Object> insertMember(HttpServletRequest request, HttpServletResponse response);
 	//로그인
 	public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response);
+	//회원정보 수정
+	public Map<String, Object> modify(HttpServletRequest request);
 	
 	//회원탈퇴
 	

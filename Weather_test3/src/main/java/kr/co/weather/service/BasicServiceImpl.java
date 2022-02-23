@@ -158,11 +158,17 @@ public class BasicServiceImpl implements BasicService {
 					map.put("id", user.getMember_id());
 					map.put("nickname", user.getNickname());
 					map.put("group_id", user.getGroup_id());
+					map.put("email", user.getMember_email());
 					String address = user.getAddress();
 					String region_1 = address.split(" ")[0];
 					String region_2 = address.split(" ")[1];
 					LocGrid locGrid = mapper.selectLocGrid(region_1, region_2);
-					map.put("address", address);
+					map.put("address", address); //수정필요-> 회원 지역 날씨 정보 조회 분리 필요
+					map.put("region_1", region_1);
+					map.put("region_2", region_2);
+					request.getSession().setAttribute("region_1", region_1);
+					request.getSession().setAttribute("region_2", region_2);
+					request.getSession().setAttribute("address", address);
 					request.getSession().setAttribute("winfo", wservice.getultrasrtncst(locGrid.getGrid_x()+"", locGrid.getGrid_y()+""));
 					break;
 				}
@@ -173,7 +179,38 @@ public class BasicServiceImpl implements BasicService {
 		//Session에 저장
 		request.getSession().setAttribute("userinfo", map);
 		request.getSession().setAttribute("LOGIN", true);
-		//System.out.println(map);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> modify(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", true);
+		String id = request.getParameter("id"); //이미 고정된 값이기 때문에 trim과 upper 생략
+		String pw = request.getParameter("pw");
+		String region_1 = request.getParameter("region_1");
+		String region_2 = request.getParameter("region_2");
+		try {
+			String [] temp = region_2.split(" ");
+			region_2 = temp[0]+temp[1];
+		}catch (Exception e) {}
+		String address = region_1 + " " + region_2;
+		
+		Member member = new Member();
+		member.setMember_id(id);
+		member.setMember_pw(BCrypt.hashpw(pw, BCrypt.gensalt()));
+		member.setAddress(address);
+		try {
+			mapper.modify(member);
+			LocGrid locGrid = mapper.selectLocGrid(region_1, region_2);
+			request.getSession().setAttribute("address", address);
+			request.getSession().setAttribute("region_1", region_1);
+			request.getSession().setAttribute("region_2", region_2);
+			request.getSession().setAttribute("winfo", wservice.getultrasrtncst(locGrid.getGrid_x()+"", locGrid.getGrid_y()+""));
+		}catch(Exception e) {
+			System.out.println(e.getLocalizedMessage());
+			map.put("result", false);
+		}
 		return map;
 	}
 }

@@ -47,10 +47,17 @@ public class BasicController {
 		return "signin.page";
 	}
 	
+	//로그아웃
 	@GetMapping("/signout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	//회원정보
+	@GetMapping("/profile")
+	public String profile() {
+		return "profile.page";
 	}
 
 }
