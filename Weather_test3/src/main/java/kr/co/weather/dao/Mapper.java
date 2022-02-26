@@ -88,7 +88,7 @@ public interface Mapper {
 	public List<Member> login(Member member);
 	
 	//modify
-	@Update("update weathermember set member_pw=#{member_pw}, address=#{address} where member_id=#{member_id}")
+	@Update("update weathermember set member_pw=#{member_pw}, address=#{address}, info_modify_date=#{info_modify_date} where member_id=#{member_id}")
 	public void modify(Member member);
 	
 	

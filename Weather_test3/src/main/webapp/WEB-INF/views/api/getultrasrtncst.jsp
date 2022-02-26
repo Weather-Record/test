@@ -13,8 +13,8 @@
 			<!-- <tr>현재 일시 : </tr><br/> -->
 			<tr>조회 날짜 : ${list.baseDate}</tr><br/>
 			<tr>조회 시간 : ${list.baseTime}</tr><br/>
-			<tr>온도 : ${list.t1h}</tr><br/>
-			<tr>습도 : ${list.reh}</tr><br/>
+			<tr>온도 : ${list.t1h} °C</tr><br/>
+			<tr>습도 : ${list.reh} %</tr><br/>
 		</table>
 	</div>
 	<br/>

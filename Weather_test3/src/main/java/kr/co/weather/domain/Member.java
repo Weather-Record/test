@@ -1,5 +1,6 @@
 package kr.co.weather.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 //member_num 삭제, address 추가
@@ -7,8 +8,8 @@ public class Member {
 	private String member_id;
 	private String member_pw;
 	private String member_email;
-	private Date signup_date;
-	private Date info_modify_date;
+	private String signup_date;
+	private String info_modify_date;
 	private String nickname;
 	private String group_id;
 	private String address;
@@ -31,16 +32,16 @@ public class Member {
 	public void setMember_email(String member_email) {
 		this.member_email = member_email;
 	}
-	public Date getSignup_date() {
+	public String getSignup_date() {
 		return signup_date;
 	}
-	public void setSignup_date(Date signup_date) {
+	public void setSignup_date(String signup_date) {
 		this.signup_date = signup_date;
 	}
-	public Date getInfo_modify_date() {
+	public String getInfo_modify_date() {
 		return info_modify_date;
 	}
-	public void setInfo_modify_date(Date info_modify_date) {
+	public void setInfo_modify_date(String info_modify_date) {
 		this.info_modify_date = info_modify_date;
 	}
 	public String getNickname() {

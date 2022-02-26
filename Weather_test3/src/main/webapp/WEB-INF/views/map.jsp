@@ -7,7 +7,7 @@
 <div>
 	<div id="userlocation">
 		<c:if test="${LOGIN!=null}">
-			<p class="h2">${address} 현재 날씨</p>
+			<p class="h2">${region_1} ${region_2} 현재 날씨</p>
 			<li>온도 : 
 				<c:if test="${winfo != null}">${winfo.getT1h()} °C</c:if>
 			</li>

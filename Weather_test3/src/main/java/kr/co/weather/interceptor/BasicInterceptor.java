@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import kr.co.weather.dao.Mapper;
 import kr.co.weather.domain.Grid;
+import kr.co.weather.domain.LocGrid;
 import kr.co.weather.domain.Weather;
 import kr.co.weather.service.WeatherService;
 
@@ -25,6 +27,9 @@ public class BasicInterceptor extends HandlerInterceptorAdapter{
 	@Autowired
 	private WeatherService wservice;
 
+	@Autowired
+	private Mapper mapper;
+	
 	private static List<Grid> gridlist;
 	private static List<String> templist;
 	private static int hour=0;
@@ -43,7 +48,6 @@ public class BasicInterceptor extends HandlerInterceptorAdapter{
 		//초기화 + 시간 바뀔 때마다만 날씨 실황 정보 가져오기
 		if(templist == null || hour != now.getHours()) {
 			templist = new ArrayList<String>();
-			hour = now.getHours(); //deprecated -> api 참고하고 추후 변경
 			for(int i=0; i<gridlist.size(); i++) {
 				try {
 					String grid_x = gridlist.get(i).getGrid_x()+"";
@@ -55,10 +59,27 @@ public class BasicInterceptor extends HandlerInterceptorAdapter{
 					
 				}
 			}
-			System.out.println("hour : "+hour+"시");
 		}
 		request.setAttribute("gridlist", gridlist);
 		request.setAttribute("templist", templist);
+		
+		//System.out.println((boolean)request.getSession().getAttribute("LOGIN"));
+		
+		try { 
+			if((boolean)request.getSession().getAttribute("LOGIN")==true && (request.getSession().getAttribute("winfo")==null || (boolean)request.getSession().getAttribute("modify")==true || hour != now.getHours())) {
+				//System.out.println("인터셉터 in");
+				String region_1 = (String)request.getSession().getAttribute("region_1");
+				String region_2 = (String)request.getSession().getAttribute("region_2");
+				LocGrid locGrid = mapper.selectLocGrid(region_1, region_2);
+				request.getSession().setAttribute("winfo", wservice.getultrasrtncst(locGrid.getGrid_x()+"", locGrid.getGrid_y()+""));
+				request.getSession().setAttribute("modify", false);
+			}
+		}catch(Exception e) {
+			System.out.println("LOGIN is null");
+		}
+		
+		hour = now.getHours(); //deprecated -> api 참고하고 추후 변경
+		System.out.println("hour : "+hour+"시");
 		return true;
 	}
 

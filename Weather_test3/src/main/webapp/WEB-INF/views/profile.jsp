@@ -91,10 +91,6 @@
 							<input type='button' class="btn btn-block send-button tx-tfm" id="modify" value='수정 '>
 						</div>
 					</div>
-					<p class="small mt-3">
-						By signing up, you are indicating that you have read and agree to the 
-						<a href="#" class="ps-hero__content__link">Terms of Use</a>and <a href="#">Privacy Policy</a>.
-					</p>
 					</form>
 				</div>
 			</div>

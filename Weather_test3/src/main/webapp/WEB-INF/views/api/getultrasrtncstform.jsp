@@ -55,8 +55,8 @@
 			<tr>지역 : ${loc}</tr><br/>
 			<tr>조회 날짜 : ${date}</tr><br/>
 			<tr>조회 시간 : ${time}</tr><br/>
-			<tr>온도 : ${list.t1h}</tr><br/>
-			<tr>습도 : ${list.reh}</tr><br/>
+			<tr>온도 : ${list.t1h} °C</tr><br/>
+			<tr>습도 : ${list.reh} %</tr><br/>
 		</table>	
 	</div>
 	
