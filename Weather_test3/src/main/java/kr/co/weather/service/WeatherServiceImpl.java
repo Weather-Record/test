@@ -3,6 +3,7 @@ package kr.co.weather.service;
 import java.io.*;
 import java.net.*;
 import java.text.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -298,28 +299,31 @@ public class WeatherServiceImpl implements WeatherService {
 	@Autowired
 	private WeatherService service;
 	
-	public void get_Tmp(Integer location_id){
-		List<Record> list = service.searchRecord(location_id);
-		List<Integer> loc_list = new ArrayList<Integer>(list.size());
+	@Override
+	public Map<String, Object> calc_record(Integer location_id){
+		List<Record> list = mapper.searchRecord(location_id);
+		//List<Integer> loc_list = new ArrayList<Integer>(list.size());
 		List<Date> date_list = new ArrayList<Date>(list.size());
 		List<Double> avgTmp_list = new ArrayList<Double>(list.size());
 		List<Double> minTmp_list = new ArrayList<Double>(list.size());
 		List<Double> maxTmp_list = new ArrayList<Double>(list.size());
-		List<Double> rainHr_list = new ArrayList<Double>(list.size());
+		//List<Double> rainHr_list = new ArrayList<Double>(list.size());
 		List<Double> dayRain_list = new ArrayList<Double>(list.size());
 		List<Double> avgHumid_list = new ArrayList<Double>(list.size());
 		List<Double> daySnow_list = new ArrayList<Double>(list.size());
+		List<Double> avgWind_list = new ArrayList<Double>(list.size());
 
 		for(Record record:list) {
-			loc_list.add(record.getLocation_id());
+			//loc_list.add(record.getLocation_id());
 			date_list.add(record.getRecord_date());
 			avgTmp_list.add(record.getAvg_tmp());
 			minTmp_list.add(record.getMin_tmp());
 			maxTmp_list.add(record.getMax_tmp());
-			rainHr_list.add(record.getRain_hours());
+			//rainHr_list.add(record.getRain_hours());
 			dayRain_list.add(record.getDay_rain());
 			avgHumid_list.add(record.getAvg_humid());
 			daySnow_list.add(record.getDay_snow());
+			avgWind_list.add(record.getAvg_windspeed());
 			}
 
 		//Find overall Avg of temp
@@ -331,78 +335,197 @@ public class WeatherServiceImpl implements WeatherService {
 		}
 		
 		//round up to 1st decimal 
-		avg_tmp = (double) Math.round((sum_avgtmp / avgTmp_list.size())*10)/10;
+		avg_tmp = (double) Math.round((sum_avgtmp / date_list.size())*10)/10;
 		
 		//Find min && max temp
 		Double min_tmp = minTmp_list.stream().mapToDouble(v->v).min().orElseThrow(NoSuchElementException::new);
 		Double max_tmp = maxTmp_list.stream().mapToDouble(v->v).max().orElseThrow(NoSuchElementException::new);
 
-		System.out.println("AVG:" +avgTmp_list);
-		System.out.println("Min:" +minTmp_list);
-		System.out.println("Max:" +maxTmp_list);
-		
-		System.out.println(avg_tmp);
-		System.out.println(min_tmp);
-		System.out.println(max_tmp);
-	}
-
-	public void get_rain_humid_snow(Integer location_id){
-		List<Record> list = service.searchRecord(location_id);
-
-		List<Double> rainHr_list = new ArrayList<Double>(list.size());
-		List<Double> dayRain_list = new ArrayList<Double>(list.size());
-		List<Double> avgHumid_list = new ArrayList<Double>(list.size());
-		List<Double> daySnow_list = new ArrayList<Double>(list.size());
-
-		for(Record record:list) {
-			rainHr_list.add(record.getRain_hours());
-			dayRain_list.add(record.getDay_rain());
-			avgHumid_list.add(record.getAvg_humid());
-			daySnow_list.add(record.getDay_snow());
-			}
-		
 		//Find overall avg of rain drop per hour
+		/* Found data is not enough
 		Double sum_rainHr = 0.0;
-		Double sum_rain = 0.0;
-		
+
 		for(Double hour:rainHr_list) {
 			sum_rainHr += hour;
 		}
+		 */
 		
+		//Find overall Avg of wind
+		Double sum_wind = 0.0;
+		Double avg_wind = 0.0;
+		
+		for(Double wnd : avgWind_list) {
+			sum_wind += wnd;
+		}
+		
+		//round up to 1st decimal 
+		avg_wind = (double) Math.round((sum_wind / date_list.size())*10)/10;
+		
+		Double sum_rain = 0.0;
 		for(Double drop:dayRain_list) {
 			sum_rain += drop;
 		}
-		
-		//get avg of rain per hour and round up to 1st decimal 
+
+		//get avg of rain per day and round up to 1st decimal 
 		//id 90 + 5월 데이터에 강수량 계측은 있지만, 강수시간에 대한 데이터가 없다는 것이 확인됌.
-		Double avg_rain = (double) Math.round((sum_rain / sum_rainHr)*10)/10;
-							
+		Double avg_rain = (double) Math.round((sum_rain / date_list.size())*10)/10;
+
 		//Find overall avg of humid
 		Double sum_humid=0.0;
 		for(Double humid :avgHumid_list) {
 			sum_humid += humid;
 		}
-		Double avg_humid = (double) Math.round((sum_humid / avgHumid_list.size())*10)/10;
-		
+		Double avg_humid = (double) Math.round((sum_humid / date_list.size())*10)/10;
+
 		//Find overall avg of snow per hour
 		Double sum_snow = 0.0;
-		
+
 		for(Double flake:daySnow_list) {
 			sum_snow += flake;
 		}
-		//get avg of rain per hour and round up to 1st decimal
+		//get avg of rain per day and round up to 1st decimal
 		//since snowing hours shares data with rain hour, used sum_rainHr
-		Double avg_snow = (double) Math.round((sum_snow / sum_rainHr)*10)/10;
-		
-		
-		System.out.println("HR:" +rainHr_list);
+		Double avg_snow = (double) Math.round((sum_snow / date_list.size())*10)/10;
+
+		/*
+		System.out.println("AVG:" +avgTmp_list);
+		System.out.println("Min:" +minTmp_list);
+		System.out.println("Max:" +maxTmp_list);
+		//System.out.println("Rain HR:" +rainHr_list);
 		System.out.println("Rain:" +dayRain_list);
 		System.out.println("Humid:"+avgHumid_list);
 		System.out.println("Snow:" +daySnow_list);
-		System.out.println("avg rain::"+avg_rain);
+
+		System.out.println("avg tmp:"+avg_tmp);
+		System.out.println("min tmp:"+min_tmp);
+		System.out.println("max tmp:"+max_tmp);
+		System.out.println("avg rain:"+avg_rain);
 		System.out.println("avg humid:"+avg_humid);
 		System.out.println("avg snow:"+avg_snow);
+		System.out.println("avg wind:"+avg_wind);
+		*/
+		Map<String, Object> metrics = new HashMap();
+		metrics.put("avg_tmp", avg_tmp);
+		metrics.put("min_tmp", min_tmp);
+		metrics.put("max_tmp", max_tmp);
+		metrics.put("avg_rain", avg_rain);
+		metrics.put("avg_wind", avg_wind);
+		metrics.put("avg_humid", avg_humid);
+		metrics.put("avg_snow", avg_snow);
+		
+		return metrics;
 	}
+
+
+	@Transactional
+	@Override
+	public Map<String, Object> calc_record(HttpServletRequest request) {
+		String loc_detail = request.getParameter("loc_detail");
+		String loc_state = request.getParameter("loc_state");
+		String pickdate = request.getParameter("datepick");
+		
+		Location location = new Location();
+		location.setLocation_state(loc_state);
+		location.setLocation_name(loc_detail);
+		int location_id = mapper.selectLocation(location).getLocation_id();
+		
+		String date[] = pickdate.split("-");
+		int month = Integer.parseInt(date[1]);
+		int year = Integer.parseInt(date[0]);
+		
+		List<Record> list = mapper.search_Record(location_id, month, year);
+		List<Date> date_list = new ArrayList<Date>(list.size());
+		List<Double> avgTmp_list = new ArrayList<Double>(list.size());
+		List<Double> minTmp_list = new ArrayList<Double>(list.size());
+		List<Double> maxTmp_list = new ArrayList<Double>(list.size());
+		List<Double> dayRain_list = new ArrayList<Double>(list.size());
+		List<Double> avgHumid_list = new ArrayList<Double>(list.size());
+		List<Double> daySnow_list = new ArrayList<Double>(list.size());
+		List<Double> avgWind_list = new ArrayList<Double>(list.size());
+
+		for(Record record:list) {
+			date_list.add(record.getRecord_date());
+			avgTmp_list.add(record.getAvg_tmp());
+			minTmp_list.add(record.getMin_tmp());
+			maxTmp_list.add(record.getMax_tmp());
+			dayRain_list.add(record.getDay_rain());
+			avgHumid_list.add(record.getAvg_humid());
+			daySnow_list.add(record.getDay_snow());
+			avgWind_list.add(record.getAvg_windspeed());
+			}
+
+		//Find overall Avg of temp
+		Double sum_avgtmp = 0.0;
+		Double avg_tmp = 0.0;
+		
+		for(Double tmp:avgTmp_list) {
+			sum_avgtmp += tmp;
+		}
+		
+		//round up to 1st decimal 
+		avg_tmp = (double) Math.round((sum_avgtmp / date_list.size())*10)/10;
+		
+		//Find min && max temp
+		Double min_tmp = minTmp_list.stream().mapToDouble(v->v).min().orElseThrow(NoSuchElementException::new);
+		Double max_tmp = maxTmp_list.stream().mapToDouble(v->v).max().orElseThrow(NoSuchElementException::new);
+
+		//Find overall Avg of wind
+		Double sum_wind = 0.0;
+		Double avg_wind = 0.0;
+		
+		for(Double wnd : avgWind_list) {
+			sum_wind += wnd;
+		}
+		
+		//round up to 1st decimal 
+		avg_wind = (double) Math.round((sum_wind / date_list.size())*10)/10;
+		
+		Double sum_rain = 0.0;
+		for(Double drop:dayRain_list) {
+			sum_rain += drop;
+		}
+
+		//get avg of rain per day and round up to 1st decimal 
+		//id 90 + 5월 데이터에 강수량 계측은 있지만, 강수시간에 대한 데이터가 없다는 것이 확인됌.
+		Double avg_rain = (double) Math.round((sum_rain / date_list.size())*10)/10;
+
+		//Find overall avg of humid
+		Double sum_humid=0.0;
+		for(Double humid :avgHumid_list) {
+			sum_humid += humid;
+		}
+		Double avg_humid = (double) Math.round((sum_humid / date_list.size())*10)/10;
+
+		//Find overall avg of snow per hour
+		Double sum_snow = 0.0;
+
+		for(Double flake:daySnow_list) {
+			sum_snow += flake;
+		}
+		
+		//get avg of rain per day and round up to 1st decimal
+		//since snowing hours shares data with rain hour, used sum_rainHr
+		Double avg_snow = (double) Math.round((sum_snow / date_list.size())*10)/10;
+
+		Map<String, Object> metrics = new HashMap();
+		metrics.put("avg_tmp", avg_tmp);
+		metrics.put("min_tmp", min_tmp);
+		metrics.put("max_tmp", max_tmp);
+		metrics.put("avg_rain", avg_rain);
+		metrics.put("avg_wind", avg_wind);
+		metrics.put("avg_humid", avg_humid);
+		metrics.put("avg_snow", avg_snow);
+		
+		return metrics;
+	}
+
+
+		
+		
+		
+		
+
+
 
 
 }

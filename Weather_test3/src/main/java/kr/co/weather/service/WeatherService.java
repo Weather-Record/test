@@ -28,18 +28,10 @@ public interface WeatherService {
 	public List<Record> searchRecord(Integer location_id);
 	
 	//Data Processing
-	public void get_Tmp(Integer location_id);
-	public void get_rain_humid_snow(Integer location_id);
+	public Map<String, Object> calc_record(Integer location_id);
+	
+	//web site response
+	public Map<String, Object> calc_record(HttpServletRequest request);
+	
 
-	/*
-	 필요한 함수들 overall
-	 record & warning join
-	 1. Date(year/month/day) & location(city/state) -> 6 combination
-	 
-	 member
-	 1. sign up
-	 2. sign in (log in)
-	 3. sign out
-	 4. terminate account
-	 */
 }

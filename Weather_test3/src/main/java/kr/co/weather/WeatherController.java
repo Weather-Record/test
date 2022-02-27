@@ -94,4 +94,15 @@ public class WeatherController {
 	}	
 	
 	
+	//특정 기간을 월로 반환한 뒤 리포트
+	@GetMapping("/report_weather")
+	public String report_weather() {
+		return "report_weather.page";
+	}
+	
+	@ResponseBody
+	@PostMapping("/report_weather")
+	public Map<String, Object> report_weather(HttpServletRequest request) {
+		return wservice.calc_record(request);
+	}
 }

@@ -2,6 +2,7 @@ package kr.co.weather.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -62,12 +63,41 @@ public interface Mapper {
 	@Select("select * from record where location_id=#{location_id} and record_date>=#{start} and record_date<=#{end}")
 	public List<Record> selectWeatherPeriod(@Param("location_id") int location_id, @Param("start") String start, @Param("end") String end);
 	
+
+	
+	//location_state로 id 조회
+	@Select("select location_id from location where location_state=#{location_state}")
+	public List<Location> searchState(@Param("location_state") String location_state);
+	
+
+	
+	/*
+	// search location return by map 
+	@Select("select location_state, location_id from location where location_state=#{location_state}")
+	public List<Integer> search_State(@Param("location_state") String location_state);
+	
+	@Select("select * from record where location_id in (#{location_id}) and month(record_date)=2")
+	public List<Map<String, Object>> record_location(@Param("location_id") Object location_id);
+	*/
+	// 빠른 검색 & 테스트를 위해 5월 데이터만 부르도록 임의로 지정해 놓음 
+	@Select("select * from record where location_id=#{location_id} and month(record_date)=#{month}  and year(record_date)=#{year}")
+	public List<Record> search_Record(@Param("location_id") Integer location_id, @Param("month") int month,  @Param("year") int year);
+	
+
 	// 빠른 검색 & 테스트를 위해 5월 데이터만 부르도록 임의로 지정해 놓음 
 	@Select("select * from record where location_id=#{location_id} and month(record_date)=5")
 	public List<Record> searchRecord(@Param("location_id") Integer location_id);
+		
 	
 	
 	
+	//warning 조회 >> IN 이 제대로 안 먹히니 보류.
+	//@Select("select * from warning w where w.record_id in #{record_id}")
+	
+	//searh_state에서 찾은 id로 포괄 검색을 시도했지만, mybatis에서는 잘 안 먹혀서 보류. 
+	//https://javadeveloperzone.com/spring/spring-jpa-query-in-clause-example/
+	//@Select("select * from record where location_id in (#{location_id}) and month(record_date)=2")
+	// List<Map<String, Object>> record_location(@Param("location_id") Object location_id);
 	
 	//////////////////// Member Query
 	//	ID / PW check
