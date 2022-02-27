@@ -1,3 +1,17 @@
+<0228> - *** jjy branch 참조 바람 ***
+지역별 해당월의 Report 기능 추가됨.
+현재 따로 웹페이지에 링크를 안 걸어놓아서 수동으로 링크 조작해야함. (http://localhost:8080/report_weather)
+
+원래는 select* from ... where ... in ... 을 이용하여 도시가 아닌 도(state) 단위 비교 리포트를 만들려 하였으나, 
+거듭된 말썽으로 아래처럼 구현함.
+
+![image](https://user-images.githubusercontent.com/11862386/155903866-3ed9587b-3892-4b72-877f-4ef324e819d1.png)
+
+
+<0224~26>
+0226 - 회원 지역 날씨 로딩 interceptor로 이동
+0224 - 회원정보수정
+
 <0222>
 1. group_id가 admin일 경우만 관리자 페이지 접근 가능
 2. 로그인 성공시 화면에 사용자 설정 지역의 현재 온/습도 출력
