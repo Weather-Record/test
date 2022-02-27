@@ -5,8 +5,7 @@
 원래는 select* from ... where ... in ... 을 이용하여 도시가 아닌 도(state) 단위 비교 리포트를 만들려 하였으나, 
 거듭된 말썽으로 아래처럼 구현함.
 
-![image](https://user-images.githubusercontent.com/11862386/155903866-3ed9587b-3892-4b72-877f-4ef324e819d1.png)
-
+![image](https://user-images.githubusercontent.com/11862386/155903929-651d35d8-614e-4b37-8e10-e208863112aa.png)
 
 <0224~26>
 0226 - 회원 지역 날씨 로딩 interceptor로 이동
