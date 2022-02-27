@@ -8,8 +8,8 @@
 ![image](https://user-images.githubusercontent.com/11862386/155903929-651d35d8-614e-4b37-8e10-e208863112aa.png)
 
 <0224~26>
--0226 - 회원 지역 날씨 로딩 interceptor로 이동
--0224 - 회원정보수정
+1. 0226 - 회원 지역 날씨 로딩 interceptor로 이동2
+2. 0224 - 회원정보수정
 
 <0222>
 1. group_id가 admin일 경우만 관리자 페이지 접근 가능
